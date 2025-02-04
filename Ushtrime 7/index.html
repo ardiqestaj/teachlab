@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Travel Destinations</title>
+    <link
+      href="https://fonts.googleapis.com/css?family=Quicksand:400,700"
+      rel="stylesheet"
+    />
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Quicksand", sans-serif;
+        background-color: #ecf9ff;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      /* Stats Section Styles */
+      .stats-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 40px;
+      }
+      .stat-card {
+        background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
+        border-radius: 10px;
+        padding: 15px 20px;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 150px;
+        height: 120px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        color: white;
+      }
+      .stat-card h3 {
+        font-size: 1.2rem;
+        margin: 0 0 10px;
+      }
+      .stat-card p {
+        font-size: 0.9rem;
+        margin: 0;
+      }
+
+      /* Cards Section Styles */
+      .cards {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+        list-style: none;
+        padding: 0;
+      }
+      .cards_item {
+        width: 100%;
+        max-width: 300px;
+      }
+      .card {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+      }
+      .card_image img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+      .card_content {
+        padding: 20px;
+        background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
+      }
+      .card_title {
+        font-size: 1.2em;
+        margin: 0 0 10px;
+        color: white;
+      }
+      .card_text {
+        font-size: 0.9em;
+        color: white;
+        margin: 0 0 15px;
+      }
+      .btn {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 10px;
+        font-size: 0.9em;
+        color: white;
+        background: rgba(0, 0, 0, 0.1);
+        border: none;
+        border-radius: 5px;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+      .btn:hover {
+        background: rgba(0, 0, 0, 0.2);
+      }
+      .btn.delete {
+        background-color: #ff4c4c;
+      }
+      .btn.delete:hover {
+        background-color: #ff6666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Travel Destinations</h1>
+
+    <!-- Stats Section -->
+    <div class="stats-container" id="stats-container">
+      <!-- Stats cards will be dynamically inserted here -->
+    </div>
+
+    <!-- Destination Cards -->
+    <ul class="cards" id="destination-cards"></ul>
+
+    <script>
+      const API_BASE_URL = "http://localhost:3001";
+
+      // Fetch and display stats
+      async function fetchStats() {
+        try {
+          const totalVisitorsResponse = await fetch(
+            `${API_BASE_URL}/destinations/stats/total-visitors`
+          );
+          const highestRatedResponse = await fetch(
+            `${API_BASE_URL}/destinations/stats/highest-rating`
+          );
+          const mostAttracionResponse = await fetch(
+            `${API_BASE_URL}/destinations/stats/most-attractions`
+          );
+
+          const totalVisitors = await totalVisitorsResponse.json();
+          const highestRated = await highestRatedResponse.json();
+          const mostAttracion = await mostAttracionResponse.json();
+
+          const statsContainer = document.getElementById("stats-container");
+          statsContainer.innerHTML = `
+            <div class="stat-card">
+              <h3>Total Visitors</h3>
+              <p>${totalVisitors.totalVisitors.toLocaleString()}</p>
+            </div>
+            <div class="stat-card">
+              <h3>Highest Rated</h3>
+              <p>${highestRated.name} (${highestRated.rating} ⭐)</p>
+            </div>
+            <div class="stat-card">
+              <h3>Most Attraction</h3>
+              <p>${mostAttracion}</p>
+            </div>
+          `;
+        } catch (error) {
+          console.error("Error fetching stats:", error);
+        }
+      }
+
+      // Fetch and display destination cards
+      async function fetchDestinations() {
+        try {
+          const response = await fetch(`${API_BASE_URL}/destinations`);
+          if (!response.ok) {
+            throw new Error("Failed to fetch destinations");
+          }
+          const destinations = await response.json();
+          renderDestinationCards(destinations);
+        } catch (error) {
+          console.error("Error fetching destinations:", error);
+        }
+      }
+
+      // Render destination cards
+      function renderDestinationCards(destinations) {
+        const container = document.getElementById("destination-cards");
+        container.innerHTML = destinations
+          .map((destination) => {
+            return `
+          <li class="cards_item">
+            <div class="card">
+              <div class="card_image">
+                <img src="${destination.image}" alt="${destination.name}">
+              </div>
+              <div class="card_content">
+                <h2 class="card_title">${destination.name}</h2>
+                <p class="card_text">
+                  <strong>Country:</strong> ${destination.country}<br>
+                  <strong>Best Season:</strong> ${destination.best_season}<br>
+                  <strong>Rating:</strong> ${destination.rating} ⭐<br>
+                  <strong>Attractions:</strong> ${destination.attractions.join(
+                    ", "
+                  )}
+                </p>
+                <button class="btn delete" onclick="deleteDestination(${
+                  destination.id
+                })">Delete</button>
+                <button class="btn" onclick="viewDestination(${
+                  destination.id
+                })">View More</button>
+              </div>
+            </div>
+          </li>`;
+          })
+          .join("");
+      }
+
+      // Delete a destination
+      async function deleteDestination(id) {
+        try {
+          const response = await fetch(`${API_BASE_URL}/destinations/${id}`, {
+            method: "DELETE",
+          });
+          if (response.ok) {
+            alert("Destination deleted successfully");
+            fetchDestinations(); // Refresh the list
+          } else {
+            alert("Failed to delete destination");
+          }
+        } catch (error) {
+          console.error("Error deleting destination:", error);
+        }
+      }
+
+      // Navigate to a detailed view (placeholder functionality)
+      function viewDestination(id) {
+        alert(
+          `Navigate to details or edit page for destination with ID: ${id}`
+        );
+        // Example: You could navigate to a detailed page, e.g., window.location.href = `/details.html?id=${id}`;
+      }
+
+      // Fetch stats and destinations on page load
+      fetchStats();
+      fetchDestinations();
+    </script>
+  </body>
+</html>
