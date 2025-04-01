@@ -1,0 +1,9 @@
+krijo nje .env file me keto te dhena me posht:
+
+REACT_APP_BASE_URL=http://localhost:3000/api/v1
+PORT=3001
+
+per te startuar aplikacionin sheno:
+npm install
+dhe pastaj:
+npm run start
