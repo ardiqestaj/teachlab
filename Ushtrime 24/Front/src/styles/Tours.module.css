@@ -1,0 +1,240 @@
+.wrapper {
+  padding: 2rem;
+  background-color: #ecf9ff;
+}
+
+.title {
+  text-align: center;
+  font-family: "Quicksand", sans-serif;
+  margin-bottom: 30px;
+}
+
+.addButton {
+  display: block;
+  margin: 0 auto 20px;
+  padding: 10px 20px;
+  background-color: #ff4b2b;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.cards_item {
+  width: 100%;
+  max-width: 300px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card_image img {
+  width: 100%;
+  height: auto;
+}
+
+.card_content {
+  padding: 20px;
+  background: linear-gradient(to bottom left, #ef8d9c 40%, #ffc39e 100%);
+}
+
+.card_title {
+  font-size: 1.2em;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.card_text {
+  font-size: 0.9em;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  color: white;
+  font-size: 0.9em;
+  background: rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 5px;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.btn:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 500px;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modal h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.formGroup {
+  margin-bottom: 1rem;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.error {
+  color: #ff4b2b;
+  margin: 1rem 0;
+  padding: 0.5rem;
+  background-color: #fff5f5;
+  border-radius: 4px;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.modalActions button {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.modalActions button[type="submit"] {
+  background-color: #ff4b2b;
+  color: white;
+}
+
+.modalActions button[type="submit"]:hover {
+  background-color: #ff3b1b;
+}
+
+.modalActions button[type="button"] {
+  background-color: #f4f4f4;
+  color: #333;
+}
+
+.modalActions button[type="button"]:hover {
+  background-color: #e4e4e4;
+}
+
+.modalActions button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Bookings Page Styles */
+.bookingsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.bookingCard {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.bookingCard h3 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.bookingCard p {
+  margin: 8px 0;
+  color: #666;
+}
+
+.bookingCard strong {
+  color: #333;
+}
+
+.pending {
+  color: #f59e0b;
+}
+
+.confirmed {
+  color: #10b981;
+}
+
+.canceled {
+  color: #ef4444;
+}
+
+.completed {
+  color: #10b981;
+}
+
+.failed {
+  color: #ef4444;
+}
+
+.cancelButton {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.cancelButton:hover {
+  background-color: #dc2626;
+}
